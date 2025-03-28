@@ -13,6 +13,6 @@ public interface UserService {
     public User registerUser(User user);
     public User getUser(String username);
     public void deposit(String username, double amount);
-    public BetRecord placeBet(String username, long gameId, double betAmount);
+    public BetRecord placeBet(String username, long gameId, double betAmount) throws InterruptedException;
     public BetSummery getBetSummary(String username);
 }

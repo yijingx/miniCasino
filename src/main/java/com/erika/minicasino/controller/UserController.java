@@ -94,7 +94,7 @@ public class UserController {
     @PostMapping("/placeBet")
     public BaseResponse<BetRecord> placeBet(@Parameter(description = "Username of the user") @RequestParam String username,
                                             @Parameter(description = "ID of the game") @RequestParam long gameId,
-                                            @Parameter(description = "Amount to bet") @RequestParam double betAmount) {
+                                            @Parameter(description = "Amount to bet") @RequestParam double betAmount) throws InterruptedException {
         BetRecord betRecord = userService.placeBet(username, gameId, betAmount);
         return ResultUtils.success(betRecord);
     }

@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BetRecord placeBet(String username, long gameId, double betAmount) {
+    public BetRecord placeBet(String username, long gameId, double betAmount) throws InterruptedException {
         User user = getUser(username);
         if (betAmount <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "Bet amount must be greater than 0");
@@ -79,7 +79,9 @@ public class UserServiceImpl implements UserService {
         if (betAmount < game.getMinBet() || betAmount > game.getMaxBet()) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "Bet not within game limits.");
         }
-        user.setBalance(user.getBalance()-betAmount);
+        double number = user.getBalance();
+        Thread.sleep(10000);
+        user.setBalance(number-betAmount);
         boolean win = random.nextDouble()<game.getChanceOfWinning();
         double amountWon=0.0;
         if(win){
