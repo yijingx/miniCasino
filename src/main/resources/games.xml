@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<games>
+    <game>
+        <id>1</id>
+        <name>Slot Machine</name>
+        <chanceOfWinning>0.2</chanceOfWinning>
+        <winningMultiplier>5.0</winningMultiplier>
+        <minBet>1.0</minBet>
+        <maxBet>100.0</maxBet>
+    </game>
+    <game>
+        <id>2</id>
+        <name>Roulette</name>
+        <chanceOfWinning>0.4</chanceOfWinning>
+        <winningMultiplier>2.5</winningMultiplier>
+        <minBet>2.0</minBet>
+        <maxBet>50.0</maxBet>
+    </game>
+    <game>
+        <id>3</id>
+        <name>Blackjack</name>
+        <chanceOfWinning>0.5</chanceOfWinning>
+        <winningMultiplier>2.0</winningMultiplier>
+        <minBet>5.0</minBet>
+        <maxBet>200.0</maxBet>
+    </game>
+</games>
