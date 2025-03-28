@@ -29,6 +29,7 @@ public class User {
     private double balance;
 
     @Schema(description = "History of the user's bets")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<BetRecord> betHistory = new ArrayList<>();
 
     @JsonCreator
