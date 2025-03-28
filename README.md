@@ -141,6 +141,50 @@ mvn test
 Tests include user registration, deposit, bet placement, balance checks, and game loading.
 
 ---
+## ✅ Implemented Features (Per Requirements)
+
+- **List games and their details:**  
+  `GET /game` and `GET /game/{id}` endpoints return all available games and their individual details.
+
+- **Register a player:**  
+  `POST /user/register` allows a player to register with name, username, and birthdate. Age validation (18+) is enforced.
+
+- **Place a bet as a player and return result:**  
+  `POST /user/placeBet` lets a player place a bet on a game. The outcome (win/loss), payout, and record are returned.
+
+- **Get the balance of the player:**  
+  `GET /user/balance` returns the current balance of the specified player.
+
+- **Deposit money as a player:**  
+  `POST /user/deposit` allows a player to add funds to their balance.
+
+---
+
+## 🌟 Bonus Features (Implemented)
+
+- **Game initialization from XML**
+   - Loads `games.xml` at startup if available
+   - Falls back to default in-memory games if no file is found
+   - Supports uploading a new game list via API (`POST /game/upload-xml`) — replacing the existing list dynamically
+
+- **Server-managed bet history**
+   - Bet records are added server-side only
+   - Users cannot manually inject or modify their bet history (secured using `@JsonProperty(access = READ_ONLY)`)
+
+- **Bet summary endpoint**
+   - `GET /user/betSummary` returns number of bets, total bet amount, and total winnings for a user
+
+- **Full Swagger/OpenAPI integration**
+   - All endpoints documented with request/response examples, error responses, and input validation annotations
+   - API available via Swagger UI: `http://localhost:8080/swagger-ui.html`
+
+- **Well-structured response format**
+   - Consistent `BaseResponse<T>` wrapper used for all API responses with `code`, `message`, `data`, and `description`
+
+- **Unit tests**
+   - Comprehensive unit tests for both service and controller layers, covering registration, betting, game upload, etc.
+
+---
 
 ## 🧭 API Endpoints Summary
 
