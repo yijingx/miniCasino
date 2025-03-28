@@ -1,6 +1,7 @@
 package com.erika.minicasino.service.impl;
 
 import com.erika.minicasino.common.ErrorCode;
+import com.erika.minicasino.common.ResultUtils;
 import com.erika.minicasino.exception.BusinessException;
 import com.erika.minicasino.model.Game;
 import com.erika.minicasino.model.User;
@@ -43,14 +44,21 @@ public class GameServiceImpl implements GameService {
         gameMap.put(3L, new Game(3L, "Blackjack", 0.5, 2.0, 5.0, 200.0));
     }
 
-    private void loadFromXml(InputStream xml) throws Exception {
-        JAXBContext context = JAXBContext.newInstance(GameListWrapper.class);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        GameListWrapper wrapper = (GameListWrapper) unmarshaller.unmarshal(xml);
-        for (Game game : wrapper.getGames()) {
-            gameMap.put(game.getId(), game);
+    @Override
+    public Map<Long, Game> loadFromXml(InputStream xml) {
+        try{
+            JAXBContext context = JAXBContext.newInstance(GameListWrapper.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            GameListWrapper wrapper = (GameListWrapper) unmarshaller.unmarshal(xml);
+            gameMap.clear();
+            for (Game game : wrapper.getGames()) {
+                gameMap.put(game.getId(), game);
+            }
+            System.out.println("Loaded " + wrapper.getGames().size() + " games from XML.");
+        }catch (Exception e) {
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR,"Invalid XML file.");
         }
-        System.out.println("Loaded " + wrapper.getGames().size() + " games from XML.");
+        return gameMap;
     }
 
     @Override

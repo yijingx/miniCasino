@@ -2,7 +2,9 @@ package com.erika.minicasino.service;
 
 import com.erika.minicasino.model.Game;
 
+import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 public interface GameService {
     List<Game> getAllGames();
@@ -10,4 +12,5 @@ public interface GameService {
 
     Game addGame(Game newGame);
 
+    Map<Long, Game> loadFromXml(InputStream xml);
 }

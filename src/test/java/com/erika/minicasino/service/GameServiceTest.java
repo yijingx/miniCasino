@@ -8,7 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,5 +64,44 @@ public class GameServiceTest {
 
         assertEquals("Updated Game", result.getName());
         assertEquals(0.9, result.getChanceOfWinning());
+    }
+
+    @Test
+    void testLoadFromXml_ShouldParseAndReturnGames() throws Exception {
+        String xmlContent = """
+            <games>
+                <game>
+                    <id>1</id>
+                    <name>Slot Machine</name>
+                    <chanceOfWinning>0.2</chanceOfWinning>
+                    <winningMultiplier>5.0</winningMultiplier>
+                    <minBet>1.0</minBet>
+                    <maxBet>100.0</maxBet>
+                </game>
+                <game>
+                    <id>2</id>
+                    <name>Roulette</name>
+                    <chanceOfWinning>0.4</chanceOfWinning>
+                    <winningMultiplier>2.5</winningMultiplier>
+                    <minBet>2.0</minBet>
+                    <maxBet>50.0</maxBet>
+                </game>
+            </games>
+        """;
+
+        InputStream xmlStream = new ByteArrayInputStream(xmlContent.getBytes(StandardCharsets.UTF_8));
+        Map<Long, Game> result = gameService.loadFromXml(xmlStream);
+
+        assertEquals(2, result.size());
+
+        Game game1 = result.get(1L);
+        assertNotNull(game1);
+        assertEquals("Slot Machine", game1.getName());
+        assertEquals(0.2, game1.getChanceOfWinning());
+        assertEquals(5.0, game1.getWinningMultiplier());
+
+        Game game2 = result.get(2L);
+        assertNotNull(game2);
+        assertEquals("Roulette", game2.getName());
     }
 }
